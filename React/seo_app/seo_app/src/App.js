@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import React , {useState, useEffect} from 'react'
+import api from './api'
 
-function App() {
+const App=()=>{
+  const [equipaments, setEquipaments]= useState([]);
+  const fetchEquipament= async () => {
+    const response=await api.get('/equipament/');
+    setEquipaments(response.data)
+  };
+  useEffect(()=> {
+    fetchEquipament();
+  },[] );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <div>
+    <table  className='table table-striped table-bordered table-hover'>
+    <thead>
+      <tr>
+        <th>name</th>
+        <th>avr-h</th>
+        <th>kwh</th>
+        
+
+      </tr>
+    </thead>
+    <tbody>
+      {equipaments.map((equipaments) => (
+        <tr key={equipaments.id}>
+          <td>{equipaments.name}</td>
+          <td>{equipaments.avr_hours}</td>
+          <td>{equipaments.kwh}</td>
+        </tr>
+      ))}
+    </tbody>
+
+    </table>
+
+  </div>
+
+  )
+
 }
+
 
 export default App;

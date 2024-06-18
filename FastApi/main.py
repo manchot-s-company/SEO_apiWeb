@@ -21,7 +21,7 @@ app.add_middleware(
 ) 
 
 class EquipmentBase(BaseModel):
-    name:str
+    name: str
     avr_hours: float
     kwh: float
 
