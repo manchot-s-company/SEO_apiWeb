@@ -22,6 +22,8 @@ This project focuses on the development of a web application aimed at achieving 
 
  pip install -r requeriments.txt
 ```
+3. nodejs dowload: [node](https://nodejs.org/en/download/package-manager)
+
 ## Usage 
 
 Explain how to use your project and/or provide usage examples.
@@ -32,7 +34,12 @@ Detail how other developers can contribute to your project.
 
 ## Run
 run the fastApi:
+cd: FastApi
 uvicorn main:app --reload
+run react:
+cd: React\seo_app
+npm start
+
 
 
 

@@ -31,6 +31,7 @@ class EquipamentModel(EquipmentBase):
         orm_model=True
 
 
+
 def get_db():
     db=SessionLocal()
     try:

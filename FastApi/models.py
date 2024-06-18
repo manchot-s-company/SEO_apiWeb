@@ -8,3 +8,7 @@ class Equipment(Base):
     name=Column(String)
     avr_hours=Column(Float)
     kwh=Column(Float)
+
+
+    
+    
