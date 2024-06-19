@@ -24,13 +24,25 @@ class EquipmentBase(BaseModel):
     name: str
     avr_hours: float
     kwh: float
+    house_id: int
+   
 
 class EquipamentModel(EquipmentBase):
     id:int
+    
     class Config:
         orm_model=True
 
+class HouseBase(BaseModel):
+    adress: str
 
+class HouseModel(HouseBase):
+    id: int
+    equipments: list[EquipamentModel]
+    
+    class Config:
+        orm_mode=True
+        
 
 def get_db():
     db=SessionLocal()
@@ -42,6 +54,8 @@ def get_db():
 db_dependency=Annotated[Session, Depends(get_db)]
 models.Base.metadata.create_all(bind=engine)
 
+
+#equipments
 @app.post("/equipament/", response_model=EquipamentModel)
 async def create_equipament(equipament:EquipmentBase, db: db_dependency):
     db_equipament=models.Equipment(**equipament.dict())
@@ -54,5 +68,20 @@ async def create_equipament(equipament:EquipmentBase, db: db_dependency):
 async def read_equipament(db:db_dependency,skip:int=0,limit:int=500):
     equipaments=db.query(models.Equipment).offset(skip).limit(limit).all()
     return equipaments
+
+#houses
+
+@app.post("/house/", response_model=HouseModel)
+async def create_house(house: HouseBase, db: db_dependency):
+    db_house = models.House(**house.dict())
+    db.add(db_house)
+    db.commit()
+    db.refresh(db_house)
+    return db_house
     
+@app.get("/house/", response_model=List[HouseModel])
+async def read_house(db:db_dependency,skip:int=0,limit:int=100):
+    houses=db.query(models.House).offset(skip).limit(limit).all()
+    return houses
+  
     
